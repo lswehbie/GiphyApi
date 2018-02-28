@@ -6,6 +6,12 @@
 
 } 
 
+p {
+
+	color: white;
+	font-family: 'Interstellar', sans-serif;
+}
+
 body {
 
 	margin: 0;

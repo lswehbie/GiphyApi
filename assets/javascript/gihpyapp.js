@@ -52,18 +52,13 @@ $("#space").on("click", function(event) {
       $("#resultsWrapper").append(images);
       $("#resultsWrapper").removeData();
 
-      console.log(stillPic);
-      console.log(movingPic);
-      console.log(arrayOfGifs[i]);
+      // Under every gif, display its rating (PG, G, so on).
+
+      var ratingParagraph = document.createElement("p");
+      var rating = arrayOfGifs[i].rating;
+      $(ratingParagraph).text(rating);
+      $("#resultsWrapper").append(ratingParagraph);
     }
-
-    //When the user clicks one of the still GIPHY images, the gif should animate.
-    //If the user clicks the gif again, it should stop playing.
-
-    // $(document).on("click", ".imageSize", function(event) {
-    //   console.log(arrayOfGifs[i]);
-    //   $(this).attr("src", movingPic);
-    // });
   });
 });
 
@@ -90,7 +85,13 @@ $("#searchMore").submit(function(event) {
   }
 });
 
-$("#resultsWrapper").on("click",
+//When the user clicks one of the still GIPHY images, the gif should animate.
+//If the user clicks the gif again, it should stop playing.
+
+//could not get this to work
+
+$("#resultsWrapper").on(
+  "click",
   function() {
     $(this).attr("src", movingPic);
   },
@@ -98,5 +99,5 @@ $("#resultsWrapper").on("click",
     $(this).attr("src", stillPic);
   }
 );
-// Under every gif, display its rating (PG, G, so on).
+
 //* This data is provided by the GIPHY API.
