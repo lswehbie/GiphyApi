@@ -1,4 +1,4 @@
-# GiphyApi2
+# GiphyApi
 
 Discover Space Through the Giphy Api!! 
 
