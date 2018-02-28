@@ -22,10 +22,9 @@ for (var i = 0; i < topics.length; i++) {
 //images from the GIPHY API and place them on the page.
 
 // when you click the button it appears as text
-$("BUTTON").click(function() {
-  x = $(this).text();
 
-
+$("#space").on("click", function(event) {
+  x = $(event.target).text();
 
   //personal Giphy API key
 
@@ -34,43 +33,59 @@ $("BUTTON").click(function() {
     x +
     "&api_key=n8iqU0pSZjIuWNBGDd3gKnhkJYo4FFy4&limit=10";
 
-  console.log(queryURL);
-
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function(response) {
     var arrayOfGifs = response.data;
 
-    for (i = 0; i < arrayOfGifs.length; i++) {
-      console.log(arrayOfGifs[i]);
 
+    for (i = 0; i < arrayOfGifs.length; i++) {
       var images = document.createElement("img");
-      $(images).attr("src", arrayOfGifs[i].images.original.url);
+      var stillPic = arrayOfGifs[i].images.downsized_still.url;
+      var movingPic = arrayOfGifs[i].images.downsized_large.url;
+      $(images).attr("src", stillPic);
+      $(images).attr("class", "imageSize");
       $("#resultsWrapper").append(images);
       $("#resultsWrapper").removeData();
 
-
-      console.log(images);
+      console.log(stillPic);
 
 
     }
 
+    //When the user clicks one of the still GIPHY images, the gif should animate.
+    //If the user clicks the gif again, it should stop playing.
 
+      $(document).on("click", ".imageSize", function(event) {
+        console.log(arrayOfGifs[i]);
+        $(this).attr("src", movingPic);
+      })
   });
-
-
-
 });
 
-//event.preventDefault()  FOR THE SEARCH BAR !!!!! LOOK IT UP
+// the user will be able to search
+$("#searchMore").submit(function(event) {
+  event.preventDefault();
 
-//When the user clicks one of the still GIPHY images, the gif should animate.
-//If the user clicks the gif again, it should stop playing.
+  //creating new variable from the user input
+  //Add a form to your page takes the value from a user input box and adds it into your `topics` array.
+  //Then make a function call that takes each topic in the array remakes the buttons on the page.
+
+  var spacey = $("#getMore").val();
+
+  topics.push(spacey);
+  topics.splice(0, topics.length - 1);
+
+  for (var i = 0; i < topics.length; i++) {
+    topics[i];
+
+    var btn = document.createElement("BUTTON");
+    var t = document.createTextNode(topics[i]);
+    btn.appendChild(t);
+    $("#space").append(btn);
+  }
+});
 
 // Under every gif, display its rating (PG, G, so on).
 //* This data is provided by the GIPHY API.
-//* Only once you get images displaying with button presses should you move on to the next step.
-
-//Add a form to your page takes the value from a user input box and adds it into your `topics` array.
-//Then make a function call that takes each topic in the array remakes the buttons on the page.
