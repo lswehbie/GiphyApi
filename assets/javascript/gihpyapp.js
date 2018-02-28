@@ -6,6 +6,10 @@ var topics = ["pluto", "stars", "nebula", "wormhole", "uranus", "blackhole"];
 
 var x;
 
+var stillPic;
+
+var movingPic;
+
 for (var i = 0; i < topics.length; i++) {
   topics[i];
 
@@ -39,28 +43,27 @@ $("#space").on("click", function(event) {
   }).then(function(response) {
     var arrayOfGifs = response.data;
 
-
     for (i = 0; i < arrayOfGifs.length; i++) {
       var images = document.createElement("img");
-      var stillPic = arrayOfGifs[i].images.downsized_still.url;
-      var movingPic = arrayOfGifs[i].images.downsized_large.url;
-      $(images).attr("src", stillPic);
+      stillPic = arrayOfGifs[i].images.downsized_still.url;
+      movingPic = arrayOfGifs[i].images.downsized_large.url;
+      $(images).attr("src", movingPic);
       $(images).attr("class", "imageSize");
       $("#resultsWrapper").append(images);
       $("#resultsWrapper").removeData();
 
       console.log(stillPic);
-
-
+      console.log(movingPic);
+      console.log(arrayOfGifs[i]);
     }
 
     //When the user clicks one of the still GIPHY images, the gif should animate.
     //If the user clicks the gif again, it should stop playing.
 
-      $(document).on("click", ".imageSize", function(event) {
-        console.log(arrayOfGifs[i]);
-        $(this).attr("src", movingPic);
-      })
+    // $(document).on("click", ".imageSize", function(event) {
+    //   console.log(arrayOfGifs[i]);
+    //   $(this).attr("src", movingPic);
+    // });
   });
 });
 
@@ -87,5 +90,13 @@ $("#searchMore").submit(function(event) {
   }
 });
 
+$("#resultsWrapper").on("click",
+  function() {
+    $(this).attr("src", movingPic);
+  },
+  function() {
+    $(this).attr("src", stillPic);
+  }
+);
 // Under every gif, display its rating (PG, G, so on).
 //* This data is provided by the GIPHY API.
